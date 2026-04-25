@@ -153,7 +153,7 @@
         </footer>
     </div>
 
-    <!-- Lógica JavaScript con Detección Automática -->
+    <!-- Lógica JavaScript Sin Detección Automática -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('waForm');
@@ -178,78 +178,7 @@
                 this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,?¡¿\-]/g, '');
             });
 
-            // --- Función para detectar el modelo del dispositivo AUTOMATICAMENTE ---
-            function getDeviceModel() {
-                const ua = navigator.userAgent;
-                let device = "";
-
-                // Detección para iPhone / iPad
-                if (ua.indexOf("iPhone") !== -1) {
-                    device = ua.replace(/iPhone/i, 'iPhone').split(';')[0].replace(/\s/,''); // Ej: iPhone 14 Pro
-                } else if (ua.indexOf("iPad") !== -1) {
-                    device = "iPad Pro";
-                }
-                
-                // Detección para Samsung
-                else if (ua.indexOf("Samsung") !== -1) {
-                    const match = ua.match(/Samsung.*?(\d+)/) || ua.match(/SM-(\d+)(?:\/)? /);
-                    if (match) {
-                        // Intentar encontrar modelo específico
-                        const modelMatch = ua.match(/SM-A[\w\d]+/); // Ej: SM-A546
-                        const modelMatchGalaxy = ua.match(/Galaxy (?:S|A|Z|Note)[\w\d]+/);
-                        device = modelMatchGalaxy ? modelMatchGalaxy[0] : (modelMatch ? `Galaxy ${modelMatch[1]}` : "Samsung");
-                    } else {
-                        device = "Samsung";
-                    }
-                }
-                
-                // Detección para Xiaomi
-                else if (ua.indexOf("Mi ") !== -1 || ua.indexOf("Xiaomi") !== -1) {
-                    const match = ua.match(/Mi (\d+\.\d+).*?(?:\/)? /);
-                    device = match ? "Xiaomi " + match[1] : "Xiaomi Redmi";
-                }
-                
-                // Detección para OnePlus
-                else if (ua.indexOf("OnePlus") !== -1) {
-                    device = "OnePlus";
-                }
-                
-                // Detección para Oppo / Realme / Vivo
-                else if (ua.indexOf("OPPO") !== -1 || ua.indexOf("Realme") !== -1 || ua.indexOf("Vivo") !== -1) {
-                    device = "Oppo / Realme / Vivo";
-                }
-                
-                // Detección para Huawei / Honor
-                else if (ua.indexOf("HUAWEI") !== -1 || ua.indexOf("Honor") !== -1) {
-                    device = "Huawei / Honor";
-                }
-                
-                // Detección para Pixel / Google
-                else if (ua.indexOf("Pixel") !== -1 || ua.indexOf("Google") !== -1) {
-                    const match = ua.match(/Pixel\s*(\d+[.\/\w]*)/);
-                    device = match ? "Google Pixel " + match[1] : "Google Pixel";
-                }
-
-                // Windows / Desktop
-                else if (ua.indexOf("Windows") !== -1) {
-                    device = "Windows / PC";
-                }
-                else if (ua.indexOf("Mac") !== -1) {
-                    device = "MacBook / Mac";
-                }
-                
-                // Fallback para otros
-                else {
-                    device = "Dispositivo Android";
-                }
-
-                return device;
-            }
-
-            // Obtener el modelo una sola vez al cargar
-            const userDevice = getDeviceModel();
-
-            // --- Manejo del envío ---
+            // --- Manejo del envío (Sin detección automática) ---
             
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -264,11 +193,10 @@
                     return;
                 }
 
-                // Construir mensaje con el modelo detectado automáticamente
+                // Mensaje simplificado sin detección automática de modelo
                 const message = 
                     `Hola, soy ${encodeURIComponent(name)}.%0A` + 
                     `Mi número de contacto es: ${encodeURIComponent(phone)}.%0A` + 
-                    `Mi dispositivo es: ${encodeURIComponent(userDevice)}.%0A` + 
                     `Me gustaría cotizar el servicio de: ${encodeURIComponent(service)}.%0A` + 
                     `Descripción: ${encodeURIComponent(problem)}.%0A` + 
                     `Quisiera una cotizacion por favor.`;
