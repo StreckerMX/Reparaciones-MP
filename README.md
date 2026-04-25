@@ -18,8 +18,6 @@ https://reparaciones-mp.netlify.app/
 
 \- 📱 \*\*Diseño Glassmorphism\*\*: Estilo visual moderno con transparencias y desenfoque.
 
-\- 🚀 \*\*Sin detección automática de dispositivo\*\*: Envía los datos tal cual el usuario los escribe para evitar errores.
-
 \- ✅ \*\*Validación de Formularios\*\*: Limpia automáticamente el texto en los campos para evitar caracteres raros.
 
 \- 📲 \*\*Envío directo a WhatsApp\*\*: Lleva a los clientes a una conversación de chat inmediatamente.
