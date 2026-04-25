@@ -6,13 +6,13 @@ Una página web sencilla y moderna diseñada para que los clientes puedan solici
 
 
 
-\## 📸 Demo en vivo
+\# 📸 Demo en vivo
 
 https://reparaciones-mp.netlify.app/
 
 
 
-\## ✨ Características
+\# ✨ Características
 
 
 
@@ -26,7 +26,7 @@ https://reparaciones-mp.netlify.app/
 
 
 
-\## 🛠️ Tecnologías utilizadas
+\# 🛠️ Tecnologías utilizadas
 
 
 
@@ -40,7 +40,7 @@ https://reparaciones-mp.netlify.app/
 
 
 
-\## 🖥️ Cómo ejecutar este proyecto
+\# 🖥️ Cómo ejecutar este proyecto
 
 
 
@@ -54,7 +54,7 @@ Simplemente abre el archivo `index.html` en tu navegador web.
 
 
 
-\## 📲 Configuración del número de WhatsApp
+\# 📲 Configuración del número de WhatsApp
 
 
 
@@ -62,15 +62,6 @@ Para cambiar el número al que llegan las solicitudes, edita la línea `const TA
 
 
 
-\## 📝 Licencia
-
-
+\# 📝 Licencia
 
 Distribuido bajo la licencia MIT.
-
-
-
-\---
-
-\*\*Creado por\*\*: Strecker
-
