@@ -1,5 +1,4 @@
-[README.md](https://github.com/user-attachments/files/27090602/README.md)
-\# 🛠️ Reparaciones MP - Cotizador
+# 🛠️ Reparaciones MP - Cotizador
 
 
 
