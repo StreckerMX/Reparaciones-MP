@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reparaciones MP - Cotización</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    },
+                    colors: {
+                        ios: {
+                            white: 'rgba(255, 255, 255, 0.8)',
+                            gray: 'rgba(0, 0, 0, 0.8)',
+                            glass: 'rgba(255, 255, 255, 0.65)',
+                            border: 'rgba(255, 255, 255, 0.3)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,17%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 50%, hsla(225,39%,30%,1) 0, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            background-color: #0f0f0f;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .ios-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .ios-input:focus {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.5);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+        }
+        .ios-select {
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+        
+        .ios-btn {
+            background: white;
+            color: black;
+            font-weight: 600;
+            transition: transform 0.1s;
+        }
+        .ios-btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body class="h-screen w-full flex items-center justify-center p-6 selection:bg-white selection:text-black">
+
+    <div class="glass-panel w-full max-w-md p-8 rounded-3xl relative overflow-hidden">
+        
+        <div class="absolute -top-10 -left-10 w-40 h-40 bg-white/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <header class="mb-8 text-center">
+            <div class="inline-flex items-center justify-center gap-2 mb-2 bg-white/10 px-4 py-1.5 rounded-full border border-white/10 text-sm font-medium">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                Taller Abierto
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight text-white mb-1">Reparaciones MP</h1>
+            <p class="text-gray-300 text-sm font-light tracking-wide">Cotiza la reparación de tu dispositivo</p>
+        </header>
+
+        <form id="waForm" class="space-y-6">
+            
+            <!-- 1. Nombre -->
+            <div class="space-y-3">
+                <label for="name" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider">Tu Nombre</label>
+                <input type="text" id="name" name="name" required 
+                    inputmode="text"
+                    autocomplete="name"
+                    class="ios-input w-full rounded-2xl px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/50 transition-all text-lg"
+                    placeholder="Ej. Jose Ramirez">
+            </div>
+
+            <!-- 2. Celular -->
+            <div class="space-y-3">
+                <label for="phone" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider">Celular (10 dígitos)</label>
+                <input type="tel" id="phone" name="phone" required maxlength="10"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    class="ios-input w-full rounded-2xl px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/50 transition-all text-lg"
+                    placeholder="Ej. 3312345678">
+            </div>
+
+            <!-- 3. Servicio -->
+            <div class="space-y-3">
+                <label for="service" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider">Servicio</label>
+                <select id="service" name="service" required 
+                    class="ios-select ios-input w-full rounded-2xl px-4 py-3.5 text-white focus:ring-2 focus:ring-white/50 transition-all text-lg">
+                    <option value="" class="text-black" disabled selected>-- Selecciona una opción --</option>
+                    <option value="Cambio de Pantalla" class="text-black">Cambio de Pantalla</option>
+                    <option value="Cambio de Batería" class="text-black">Cambio de Batería</option>
+                    <option value="Carga / Recarga" class="text-black">Carga / Recarga</option>
+                    <option value="Formateo" class="text-black">Formateo / Software</option>
+                    <option value="Cámara" class="text-black">Cámara</option>
+                    <option value="Otros" class="text-black">Otros</option>
+                </select>
+            </div>
+
+            <!-- 4. Descripción -->
+            <div class="space-y-3">
+                <label for="problem" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider">Descripción</label>
+                <textarea id="problem" name="problem" required rows="3"
+                    class="ios-input w-full rounded-2xl px-4 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/50 transition-all resize-none"
+                    placeholder="Describe qué falla con tu dispositivo..."></textarea>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" id="submitBtn" class="ios-btn w-full rounded-2xl py-4 text-lg font-semibold shadow-lg shadow-white/10">
+                    Enviar Solicitud
+                </button>
+                <p class="text-center text-xs text-gray-500 mt-4 font-medium">
+                    Tus datos se enviarán directamente a WhatsApp.
+                </p>
+            </div>
+        </form>
+
+        <footer class="absolute bottom-4 w-full text-center text-xs text-gray-500">
+            &copy; 2026 Reparaciones MP. Todos los derechos reservados.
+        </footer>
+    </div>
+
+    <!-- Lógica JavaScript con Detección Automática -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('waForm');
+            const nameInput = document.getElementById('name');
+            const phoneInput = document.getElementById('phone');
+            const problemInput = document.getElementById('problem');
+            const submitBtn = document.getElementById('submitBtn');
+
+            const TARGET_PHONE = "523330661490";
+
+            // --- Validación de Inputs ---
+            
+            nameInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s-]/g, '');
+            });
+
+            phoneInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g,'');
+            });
+
+            problemInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,?¡¿\-]/g, '');
+            });
+
+            // --- Función para detectar el modelo del dispositivo AUTOMATICAMENTE ---
+            function getDeviceModel() {
+                const ua = navigator.userAgent;
+                let device = "";
+
+                // Detección para iPhone / iPad
+                if (ua.indexOf("iPhone") !== -1) {
+                    device = ua.replace(/iPhone/i, 'iPhone').split(';')[0].replace(/\s/,''); // Ej: iPhone 14 Pro
+                } else if (ua.indexOf("iPad") !== -1) {
+                    device = "iPad Pro";
+                }
+                
+                // Detección para Samsung
+                else if (ua.indexOf("Samsung") !== -1) {
+                    const match = ua.match(/Samsung.*?(\d+)/) || ua.match(/SM-(\d+)(?:\/)? /);
+                    if (match) {
+                        // Intentar encontrar modelo específico
+                        const modelMatch = ua.match(/SM-A[\w\d]+/); // Ej: SM-A546
+                        const modelMatchGalaxy = ua.match(/Galaxy (?:S|A|Z|Note)[\w\d]+/);
+                        device = modelMatchGalaxy ? modelMatchGalaxy[0] : (modelMatch ? `Galaxy ${modelMatch[1]}` : "Samsung");
+                    } else {
+                        device = "Samsung";
+                    }
+                }
+                
+                // Detección para Xiaomi
+                else if (ua.indexOf("Mi ") !== -1 || ua.indexOf("Xiaomi") !== -1) {
+                    const match = ua.match(/Mi (\d+\.\d+).*?(?:\/)? /);
+                    device = match ? "Xiaomi " + match[1] : "Xiaomi Redmi";
+                }
+                
+                // Detección para OnePlus
+                else if (ua.indexOf("OnePlus") !== -1) {
+                    device = "OnePlus";
+                }
+                
+                // Detección para Oppo / Realme / Vivo
+                else if (ua.indexOf("OPPO") !== -1 || ua.indexOf("Realme") !== -1 || ua.indexOf("Vivo") !== -1) {
+                    device = "Oppo / Realme / Vivo";
+                }
+                
+                // Detección para Huawei / Honor
+                else if (ua.indexOf("HUAWEI") !== -1 || ua.indexOf("Honor") !== -1) {
+                    device = "Huawei / Honor";
+                }
+                
+                // Detección para Pixel / Google
+                else if (ua.indexOf("Pixel") !== -1 || ua.indexOf("Google") !== -1) {
+                    const match = ua.match(/Pixel\s*(\d+[.\/\w]*)/);
+                    device = match ? "Google Pixel " + match[1] : "Google Pixel";
+                }
+
+                // Windows / Desktop
+                else if (ua.indexOf("Windows") !== -1) {
+                    device = "Windows / PC";
+                }
+                else if (ua.indexOf("Mac") !== -1) {
+                    device = "MacBook / Mac";
+                }
+                
+                // Fallback para otros
+                else {
+                    device = "Dispositivo Android";
+                }
+
+                return device;
+            }
+
+            // Obtener el modelo una sola vez al cargar
+            const userDevice = getDeviceModel();
+
+            // --- Manejo del envío ---
+            
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const service = document.getElementById('service').value;
+                const problem = document.getElementById('problem').value;
+
+                if(!name || !phone || !service || !problem) {
+                    alert("Por favor completa todos los campos.");
+                    return;
+                }
+
+                // Construir mensaje con el modelo detectado automáticamente
+                const message = 
+                    `Hola, soy ${encodeURIComponent(name)}.%0A` + 
+                    `Mi número de contacto es: ${encodeURIComponent(phone)}.%0A` + 
+                    `Mi dispositivo es: ${encodeURIComponent(userDevice)}.%0A` + 
+                    `Me gustaría cotizar el servicio de: ${encodeURIComponent(service)}.%0A` + 
+                    `Descripción: ${encodeURIComponent(problem)}.%0A` + 
+                    `Quisiera una cotizacion por favor.`;
+
+                const currentTimestamp = new Date().getTime();
+                const whatsappUrl = `https://wa.me/${TARGET_PHONE}?text=${message}&t=${currentTimestamp}`;
+
+                window.open(whatsappUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
